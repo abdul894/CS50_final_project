@@ -3,15 +3,18 @@ import sqlite3
 
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
-import helpers
+from helpers import init_app, get_db, close_db, init_db
 
 
 app = Flask(__name__)
-app.config["DATABASE"] = 'db.sql'
+app.config["DATABASE"] = 'sqlite:///fumo.db'
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
+
+with app.app_context():
+    init_db()
 
 @app.after_request
 def after_request(response):
