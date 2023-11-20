@@ -10,6 +10,7 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
+print("Database Path:", app.config["DATABASE"])
 
 @app.after_request
 def after_request(response):
@@ -23,7 +24,7 @@ def after_request(response):
 def get_db():
     if 'db' not in g:
         g.db = sqlite3.connect(
-            current_app.config['DATABASE'],
+            'sqlite:///fumo.db',
             detect_types=sqlite3.PARSE_DECLTYPES
         )
         g.db.row_factory = sqlite3.Row
@@ -36,6 +37,7 @@ def close_db(e=None):
     if db is not None:
         db.close()
 
+@app.before_request
 def init_db():
     db = get_db()
 
@@ -47,5 +49,5 @@ def init_db():
 def index():
     return "Hello, World!"
 
-if __name__ == __main__:
-    app.run()
+if __name__ == '__main__':
+    app.run(debug=True)
