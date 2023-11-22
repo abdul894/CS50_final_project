@@ -18,7 +18,6 @@ def close_db(e=None):
     if db is not None:
         db.close()
 
-@app.before_request
 def init_db():
     db = get_db()
 
