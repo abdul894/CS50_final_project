@@ -26,8 +26,23 @@ def index():
     return render_template('index.html')
 
 
-@app.route("/login", methods = ['POST'])
+@app.route("/login", methods = ['GET','POST'])
 def login():
+    
+    session.clear()
+
+    if request.method == 'POST':
+        if not request.form.get('username') or not request.form.get('email'):
+            return make_response('Field is empty!', 403)
+        elif not request.form.get('password'):
+            return make_response('Field is empty', 403)
+    return render_template("register.html")
+
+
+@app.route("/register", methods = ['GET', 'POST'])
+def register():
+    """Rregister user"""
+
     if request.method == 'POST':
         if not request.form.get('username'):
             return make_response('Field is empty!', 403)

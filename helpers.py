@@ -1,6 +1,7 @@
 import sqlite3
 import click
 from flask import g, current_app
+from functools import wraps
 
 def get_db():
     if 'db' not in g:
@@ -33,6 +34,8 @@ def init_db_command():
 def init_app(app):
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
+
+
 
 
 
