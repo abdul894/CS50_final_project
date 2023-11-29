@@ -4,7 +4,7 @@ html{
 
 body{
   margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Arial", "sans-serif";
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -12,9 +12,13 @@ body{
 
 footer {
   background: #101010;
-  padding: 85px 0;
   margin-top: auto;
 }
+
+.container{
+  padding: 47px 0 25px;
+}
+
 
 .single-box h3 {
   letter-spacing: .05em;
@@ -22,7 +26,8 @@ footer {
   font-weight: 700;
   color: #fff;
   text-transform: uppercase;
-  padding-bottom: 12px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #3b3b3b;
 }
 
 .single-box ul {
@@ -33,6 +38,37 @@ footer {
 .single-box ul li a {
   text-decoration: none;
   color: #969696;
-  line-height: 20px;
+  line-height: 30px;
   font-weight: 100;
+}
+
+.bi-linkedin{
+  color: #0A66C2;
+  padding: 3px;
+  font-size: 20px;
+}
+
+.bi-facebook{
+  color: #1877f2;
+  padding: 3px;
+  font-size: 20px;
+}
+
+.bi-instagram{
+  background: #f09433; 
+  background: -moz-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); 
+  background: -webkit-linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
+  background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f09433', endColorstr='#bc1888',GradientType=1 );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding: 3px;
+  font-size: 20px;
+}
+
+.bi-github{
+  color: #7e7979;
+  padding: 3px;
+  font-size: 20px; 
 }
