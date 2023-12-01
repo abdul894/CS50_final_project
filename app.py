@@ -44,7 +44,8 @@ def register():
     """Rregister user"""
 
     if request.method == 'POST':
-        if not request.form.get('username'):
+        form_data = request.form()
+        if not form_data['username'] or not form_data['email']:
             return make_response('Field is empty!', 403)
 
 
