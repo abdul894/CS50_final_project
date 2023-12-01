@@ -19,6 +19,13 @@ footer {
   padding: 47px 0 25px;
 }
 
+.nav-icon{
+  text-decoration: none;
+  color: rgba(255, 255, 255, .55);
+  font-size: 20px;
+  padding: 10px;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+}
 
 .single-box h3 {
   letter-spacing: .05em;
@@ -71,4 +78,8 @@ footer {
   color: #7e7979;
   padding: 3px;
   font-size: 20px; 
+}
+
+.single-box a{
+  text-decoration: none;
 }
