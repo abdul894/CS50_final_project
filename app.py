@@ -3,6 +3,7 @@ import sqlite3
 
 from flask import Flask, flash, redirect, render_template, request, session, g, current_app, make_response
 from flask_session import Session
+from werkzeug.security import check_password_hash, generate_password_hash
 from helpers import *
 
 
@@ -35,7 +36,7 @@ def login():
         form_data = request.form
         if not form_data['username'] or not form_data['email'] or not form_data['password']:
             return make_response('Field is empty!', 403)
-        
+        db = get_db()
     else:
         return render_template('login.html')
 
@@ -45,10 +46,24 @@ def register():
     """Rregister user"""
 
     if request.method == 'POST':
+        db = get_db()
         form_data = request.form
-        if not form_data['username'] or not form_data['email']:
+        if not form_data['username'] or not form_data['email'] or not form_data['password']:
             return make_response('Field is empty!', 403)
-
+        elif not form_data['con_password'] == form_data['password']:
+            return make_response('Confirmed password should be same as password!')
+        try:
+            db.execute(
+                "INSERT INTO users (username, email, password) VALUES (?, ?, ?)", 
+                (form_data['username'], form_data['email'], generate_password_hash(form_data['password']))
+            )
+            db.commit()
+        except db.IntegrityError:
+            return make_response('User name already registered!')
+        
+        return redirect('/login')
+    else:
+        return render_template('register.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
