@@ -32,11 +32,12 @@ def login():
     session.clear()
 
     if request.method == 'POST':
-        if not request.form.get('username') or not request.form.get('email'):
+        form_data = request.form
+        if not form_data['username'] or not form_data['email'] or not form_data['password']:
             return make_response('Field is empty!', 403)
-        elif not request.form.get('password'):
-            return make_response('Field is empty', 403)
-    return render_template("register.html")
+        
+    else:
+        return render_template('login.html')
 
 
 @app.route("/register", methods = ['GET', 'POST'])
@@ -44,7 +45,7 @@ def register():
     """Rregister user"""
 
     if request.method == 'POST':
-        form_data = request.form()
+        form_data = request.form
         if not form_data['username'] or not form_data['email']:
             return make_response('Field is empty!', 403)
 
