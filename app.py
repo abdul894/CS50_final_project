@@ -34,12 +34,22 @@ def login():
 
     if request.method == 'POST':
         form_data = request.form
-        if not form_data['username'] or not form_data['email'] or not form_data['password']:
+        if not form_data['email'] or not form_data['password']:
             return make_response('Field is empty!', 403)
         db = get_db()
+        user_info = db.execute(
+            "SELECT * FROM users WHERE email = ?", (form_data['email'],)
+        ).fetchone()
+
+        if user_info['email'] != form_data['email'] or not check_password_hash(
+            user_info['password'], form_data['password']
+        ):
+            return make_response("Invalid username and/or password", 403)
+        
+        session['user_id'] = user_info['id']
+        return redirect('/') 
     else:
         return render_template('login.html')
-
 
 @app.route("/register", methods = ['GET', 'POST'])
 def register():
@@ -60,6 +70,10 @@ def register():
             db.commit()
         except db.IntegrityError:
             return make_response('User name already registered!')
+        
+        session['user_id'] = db.execute(
+            "SELECT id FROM users WHERE email = ?", form_data['email']
+        )
         
         return redirect('/login')
     else:
