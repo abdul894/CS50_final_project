@@ -1,27 +1,28 @@
 CREATE Table users (
-    id INTEGER AUTOINCREMENT,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT UNIQUE NOT NULL,
     email TEXT UNIQUE NOT NULL,
     password TEXT NOT NULL,
-    type TEXT NOT NULL,
-    PRIMARY KEY(id)
+    type TEXT NOT NULL
 );
 
 CREATE TABLE product (
-    id INTEGER AUTOINCREMENT,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT,
     description TEXT,
     price INTEGER NOT NULL,
-    PRIMARY KEY(id)
+    categoryid INTEGER,
     FOREIGN KEY(categoryid) REFERENCES category(id)
 );
 
 CREATE TABLE category (
-    id INTEGER AUTOINCREMENT,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT 
 );
 
 CREATE TABLE cart (
-    FOREIGN KEY(id) REFERENCES users(id),
-    FOREIGN KEY(product) REFERENCES product(id)
+    userid INTEGER,
+    productid INTEGER,
+    FOREIGN KEY(userid) REFERENCES users(id),
+    FOREIGN KEY(productid) REFERENCES product(id)
 );
