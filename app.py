@@ -44,7 +44,7 @@ def login():
         if user_info['email'] != form_data['email'] or not check_password_hash(
             user_info['password'], form_data['password']
         ):
-            return make_response("Invalid username and/or password", 403)
+            return redirect('/login')
         
         session['user_id'] = user_info['id']
         return redirect('/') 
