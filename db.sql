@@ -3,7 +3,7 @@ CREATE Table users (
     username TEXT UNIQUE NOT NULL,
     email TEXT UNIQUE NOT NULL,
     password TEXT NOT NULL,
-    type TEXT NOT NULL
+    type TEXT DEFAULT "user" NOT NULL
 );
 
 CREATE TABLE product (

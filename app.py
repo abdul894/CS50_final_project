@@ -72,7 +72,7 @@ def register():
             return make_response('User name already registered!')
         
         session['user_id'] = db.execute(
-            "SELECT id FROM users WHERE email = ?", form_data['email']
+            "SELECT id FROM users WHERE email = ?", (form_data['email'],)
         )
         
         return redirect('/login')
