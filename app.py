@@ -41,13 +41,20 @@ def login():
             "SELECT * FROM users WHERE email = ?", (form_data['email'],)
         ).fetchone()
 
-        if user_info['email'] != form_data['email'] or not check_password_hash(
+        if user_info is None:
+            return make_response("User not registered!",  403)
+        elif not check_password_hash(
             user_info['password'], form_data['password']
         ):
-            return redirect('/login')
-        
+            return make_response('password mismatched', 403)
+       
         session['user_id'] = user_info['id']
-        return redirect('/') 
+        session['user_type'] = user_info['type'] 
+        
+        if user_info['type'] == 'admin':
+            return redirect('/admin')
+        else:
+            return redirect('/')
     else:
         return render_template('login.html')
 
