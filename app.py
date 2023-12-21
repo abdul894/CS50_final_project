@@ -88,6 +88,10 @@ def register():
         return redirect('/login')
     else:
         return render_template('register.html')
+    
+@app.route("/admin", methods = ['GET', 'POST'])
+def admin():
+    return render_template('admin.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
