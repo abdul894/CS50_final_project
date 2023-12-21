@@ -56,7 +56,7 @@ def register():
     """Rregister user"""
 
     if request.method == 'POST':
-        db = get_db()
+        db = get_db()    
         form_data = request.form
         if not form_data['username'] or not form_data['email'] or not form_data['password']:
             return make_response('Field is empty!', 403)
@@ -69,12 +69,15 @@ def register():
             )
             db.commit()
         except db.IntegrityError:
-            return make_response('User name already registered!')
+            return flash('User name already registered!', 'error')
         
-        session['user_id'] = db.execute(
+        userdata = db.execute(
             "SELECT id FROM users WHERE email = ?", (form_data['email'],)
         )
-        
+        user_id = userdata.fetchone()['id']
+
+        session['user_id'] = user_id
+
         return redirect('/login')
     else:
         return render_template('register.html')
