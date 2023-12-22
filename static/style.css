@@ -23,13 +23,26 @@ footer {
   text-decoration: none;
   color: rgba(255, 255, 255, .55);
   font-size: 20px;
-  padding: 10px;
+  padding: 12px;
   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
 }
 
 .nav-icon:hover{
   color: rgb(255, 255, 255);
 }
+
+.nav-link.nav-icon{
+  text-decoration: none;
+  color: rgba(255, 255, 255, .55);
+  font-size: 20px;
+  padding: 10px;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+}
+
+.nav-link.nav-icon:hover{
+  color: rgb(255, 255, 255);
+}
+
 
 .single-box h3 {
   letter-spacing: .05em;

@@ -22,26 +22,28 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Category
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="/">Crossbody bags</a></li>
-                <li><a class="dropdown-item" href="/">PJ set</a></li>
-                <li><a class="dropdown-item" href="/">Shoulder bags</a></li>
-                <li><a class="dropdown-item" href="/">Clutches</a></li>
-                <li><a class="dropdown-item" href="/">Tate bags</a></li>
-              </ul>
-            </li>
+            {% if session['user_type'] == 'admin' %}
+              <li class="nav-item">
+                <a class="nav-link" href="#">products</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">users</a>
+              </li>
+            {% endif %}
           </ul>
+          <div class="dropdown">
+            <a class="nav-link nav-icon" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              <i class="bi bi-bag-plus"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="/">Crossbody bags</a></li>
+              <li><a class="dropdown-item" href="/">PJ set</a></li>
+              <li><a class="dropdown-item" href="/">Shoulder bags</a></li>
+              <li><a class="dropdown-item" href="/">Clutches</a></li>
+              <li><a class="dropdown-item" href="/">Tate bags</a></li>
+            </ul>
+          </div>
           <a class="nav-icon" href="/login">
             <i class="bi bi-person"></i>
           </a>
