@@ -100,3 +100,7 @@ footer {
 .single-box a{
   text-decoration: none;
 }
+
+#user_id {
+  border: none;
+}

@@ -1,7 +1,7 @@
 import os
 import sqlite3
 
-from flask import Flask, flash, redirect, render_template, request, session, g, current_app, make_response
+from flask import Flask, flash, redirect, render_template, request, session, make_response, url_for
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 from helpers import *
@@ -100,5 +100,14 @@ def users():
         users_data = db.execute("SELECT * FROM users")
         return render_template("users.html", users_data=users_data)
 
+@app.route("/delete_user", methods = ["POST"])
+def delete_user():
+    db = get_db()
+    user_id = request.form.get("user_id")
+    if user_id:
+        db.execute("DELETE FROM users WHERE id = ?", user_id)
+        db.commit()
+    return redirect(url_for("users"))
+        
 if __name__ == '__main__':
     app.run(debug=True)
