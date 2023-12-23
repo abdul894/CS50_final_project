@@ -93,5 +93,12 @@ def register():
 def admin():
     return render_template('admin.html')
 
+@app.route("/users", methods = ["GET", "POST"])
+def users():
+    if request.method == 'GET':
+        db = get_db()
+        users_data = db.execute("SELECT * FROM users")
+        return render_template("users.html", users_data=users_data)
+
 if __name__ == '__main__':
     app.run(debug=True)
