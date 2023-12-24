@@ -90,10 +90,12 @@ def register():
         return render_template('register.html')
     
 @app.route("/admin", methods = ['GET', 'POST'])
+@login_required
 def admin():
     return render_template('admin.html')
 
 @app.route("/users", methods = ["GET", "POST"])
+@login_required
 def users():
     if request.method == 'GET':
         db = get_db()
@@ -101,6 +103,7 @@ def users():
         return render_template("users.html", users_data=users_data)
 
 @app.route("/delete_user", methods = ["POST"])
+@login_required
 def delete_user():
     db = get_db()
     user_id = request.form.get("user_id")
