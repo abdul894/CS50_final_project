@@ -121,7 +121,9 @@ def products():
 @login_required
 def add_products():
     if request.method == "POST":
-        db = get_db
+        db = get_db()
+        
+
     else:    
         return render_template("add_products.html")
         
