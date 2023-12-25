@@ -104,3 +104,11 @@ footer {
 #user_id {
   border: none;
 }
+
+.addproduct_form {
+  text-align: left;
+}
+
+input[type="number"]::-webkit-inner-spin-button {
+  display: none;
+}

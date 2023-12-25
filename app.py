@@ -111,6 +111,19 @@ def delete_user():
         db.execute("DELETE FROM users WHERE id = ?", user_id)
         db.commit()
     return redirect(url_for("users"))
+
+@app.route("/products", methods = ["GET", "POST"])
+@login_required
+def products():
+        return render_template("products.html")
+
+@app.route("/add_products", methods = ["GET", "POST"])
+@login_required
+def add_products():
+    if request.method == "POST":
+        db = get_db
+    else:    
+        return render_template("add_products.html")
         
 if __name__ == '__main__':
     app.run(debug=True)
