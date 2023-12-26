@@ -122,6 +122,15 @@ def products():
 def add_products():
     if request.method == "POST":
         db = get_db()
+        productname = request.form['productname']
+        description = request.form['description']
+        category = request.form['category']
+        price = request.form['price']
+
+        db.execute("INSERT INTO product (name, description, price) VALUES (?, ?, ?)",
+                    (productname, description, price)
+        )
+        db.commit()
         
 
     else:    

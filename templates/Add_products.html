@@ -6,18 +6,18 @@ admin
 
 {% block main %}
 <div class="container d-flex justify-content-center">
-    <form class="addproduct_form" action="/add">
+    <form class="addproduct_form" action="/add" method="POST">
       <div class="mb-3">
         <label for="" class="form-label">Product Name</label>
-        <input type="text" class="form-control" id="" aria-describedby="">
+        <input type="text" name="productname" class="form-control" id="" aria-describedby="">
       </div>
       <div class="mb-3">
         <label for="" class="form-label">Description</label>
-        <input type="text" class="form-control" id="">
+        <input type="text" name="description" class="form-control" id="">
       </div>
       <div class="mb-3">
         <label for="" class="form-label">Category</label>
-        <select class="form-select" aria-label=".form-select-sm example">
+        <select class="form-select" name="category" aria-label=".form-select-sm example">
           <option selected>Select</option>
           <option value="1">Crossbody bags</option>
           <option value="2">PJ sets</option>
@@ -28,10 +28,10 @@ admin
       </div>
       <div class="mb-3">
         <label for="" class="form-label">Price</label>
-        <input type="number" inputmode="numeric" class="form-control" id="">
+        <input type="number" name="price" inputmode="numeric" class="form-control" id="">
       </div>  
       <div class="mb-3">
-        <input type="file" class="form-control" id="" aria-describedby="inputGroupFileAddon04"
+        <input type="file" name="image" class="form-control" id="" aria-describedby="inputGroupFileAddon04"
           aria-label="Upload">
       </div>
       <div>
