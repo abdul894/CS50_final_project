@@ -115,6 +115,17 @@ def delete_user():
 @app.route("/products", methods = ["GET", "POST"])
 @login_required
 def products():
+        db = get_db()
+        products_data = db.execute("SELECT * FROM product").fetchone()
+        for data in products_data:
+            product_id = data['id']
+            product_name = data['name']
+            product_description = data['description']
+            product_price = data['price']
+            product_category = data['categoryid']
+            product_image = data['imageurl']
+
+        print(f'{product_id}, {product_name}')
         return render_template("products.html")
 
 @app.route("/add_products", methods = ["GET", "POST"])
