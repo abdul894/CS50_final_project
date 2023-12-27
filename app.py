@@ -126,14 +126,22 @@ def add_products():
         description = request.form['description']
         category = request.form['category']
         price = request.form['price']
-
-        db.execute("INSERT INTO product (name, description, price) VALUES (?, ?, ?)",
-                    (productname, description, price)
-        )
-        db.commit()
         
+        if 'imageurl' in request.files:
+            image_file = request.files['imageurl']
+            image_url = f'{image_file.filename}'
 
-    else:    
+            db.execute("INSERT INTO product (name, description, price, imageurl) VALUES (?, ?, ?, ?)",
+                        (productname, description, price, image_url)
+            )
+
+            db.execute("INSERT INTO product (categoryid) SELECT id FROM category WHERE name = ?",
+                    (category)
+            )
+            db.commit()
+
+        return redirect(url_for('products'))
+    else:
         return render_template("add_products.html")
         
 if __name__ == '__main__':
