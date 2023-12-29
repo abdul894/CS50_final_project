@@ -116,7 +116,8 @@ def delete_user():
 @login_required
 def products():
         db = get_db()
-        products_data = db.execute("SELECT * FROM product").fetchone()
+        products_data = db.execute("SELECT * FROM product").fetchall()
+        product_list = []
         for data in products_data:
             product_id = data['id']
             product_name = data['name']
@@ -125,8 +126,15 @@ def products():
             product_category = data['categoryid']
             product_image = data['imageurl']
 
-        print(f'{product_id}, {product_name}')
-        return render_template("products.html")
+            product_list.append({
+                'id': product_id,
+                'name': product_name,
+                'description': product_description,
+                'price': product_price,
+                'category': product_category,
+                'image': product_image
+            })
+        return render_template("products.html", product_list=product_list)
 
 @app.route("/add_products", methods = ["GET", "POST"])
 @login_required
