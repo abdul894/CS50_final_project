@@ -114,7 +114,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .card-image-top {
-  width: 100%;
-  height: 10vw;
+  width: auto;
+  height: 200px;
   object-fit: cover;
 }

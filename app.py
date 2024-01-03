@@ -52,7 +52,7 @@ def login():
         session['user_type'] = user_info['type'] 
         
         if user_info['type'] == 'admin':
-            return redirect('/admin')
+            return redirect('/admin/products')
         else:
             return redirect('/')
     else:
@@ -89,10 +89,10 @@ def register():
     else:
         return render_template('register.html')
     
-@app.route("/admin", methods = ['GET', 'POST'])
-@login_required
-def admin():
-    return render_template('admin.html')
+# @app.route("/admin", methods = ['GET', 'POST'])
+# @login_required
+# def admin():
+#     return render_template('products.html')
 
 @app.route("/users", methods = ["GET", "POST"])
 @login_required
@@ -112,7 +112,7 @@ def delete_user():
         db.commit()
     return redirect(url_for("users"))
 
-@app.route("/products", methods = ["GET", "POST"])
+@app.route("/admin/products", methods = ["GET", "POST"])
 @login_required
 def products():
         db = get_db()
@@ -135,6 +135,16 @@ def products():
                 'image': product_image
             })
         return render_template("products.html", product_list=product_list)
+
+@app.route("/delete_product", methods = ["POST"])
+@login_required
+def delete_product():
+    return redirect(url_for("admin/products"))
+
+@app.route("/edit_product", methods = ["GET", "POST"])
+@login_required
+def edit_product():
+    return redirect(url_for("edit_product.html"))
 
 @app.route("/add_products", methods = ["GET", "POST"])
 @login_required
