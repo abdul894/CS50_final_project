@@ -6,24 +6,24 @@ admin
 
 {% block main %}
 <div class="container d-flex justify-content-center">
-    <form class="addproduct_form" action="/add_products" method="POST" enctype="multipart/form-data">
+    <form class="addproduct_form" action="/edit_product" method="POST" enctype="multipart/form-data">
       <div class="mb-3">
         <label for="" class="form-label">Product Name</label>
-        <input type="text" name="productname" class="form-control" id="" aria-describedby="">
+        <input type="text" name="productname" value="{{ old_data['name'] }}" class="form-control" id="" aria-describedby="">
       </div>
       <div class="mb-3">
         <label for="" class="form-label">Description</label>
-        <input type="text" name="description" class="form-control" id="">
+        <input type="text" name="description" value="{{ old_data['description'] }}" class="form-control" id="">
       </div>
       <div class="mb-3">
         <label for="" class="form-label">Category</label>
         <select class="form-select" name="category" aria-label=".form-select-sm example">
           <option selected>Select</option>
-          <option value="1">Crossbody bags</option>
-          <option value="2">PJ sets</option>
-          <option value="3">Shoulder bags</option>
-          <option value="4">Clutches</option>
-          <option value="5">Tate bags</option>
+          <option value="">Crossbody bags</option>
+          <option value="">PJ sets</option>
+          <option value="">Shoulder bags</option>
+          <option value="">Clutches</option>
+          <option value="">Tate bags</option>
         </select>
       </div>
       <div class="mb-3">

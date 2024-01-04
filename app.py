@@ -141,10 +141,18 @@ def products():
 def delete_product():
     return redirect(url_for("admin/products"))
 
-@app.route("/edit_product", methods = ["GET", "POST"])
+@app.route("/edit_product/<int:id>", methods = ["GET", "POST"])
 @login_required
-def edit_product():
-    return redirect(url_for("edit_product.html"))
+def edit_product(id):
+    db = get_db()
+    if request.method == "POST":
+        new_data = request.form
+        db.execute("UPDATE product SET name = ?, description = ?, price = ?, categoryid = ?, imageurl = ? WHERE id = ?",
+        (new_data['productname'], new_data['description'], new_data['price'], new_data['category'], new_data['imageurl'], id))
+        db.commit()    
+        return redirect(url_for("products"))
+    old_data = db.execute("SELECT * FROM product WHERE id = ?", id).fetchone()
+    return render_template("edit_product.html", old_data=old_data)
 
 @app.route("/add_products", methods = ["GET", "POST"])
 @login_required
