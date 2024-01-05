@@ -19,11 +19,9 @@ admin
         <label for="" class="form-label">Category</label>
         <select class="form-select" name="category" aria-label=".form-select-sm example">
           <option selected>Select</option>
-          <option value="Crossbody bags">Crossbody bags</option>
-          <option value="PJ sets">PJ sets</option>
-          <option value="Shoulder bags">Shoulder bags</option>
-          <option value="Clutches">Clutches</option>
-          <option value="Tate bags">Tate bags</option>
+          {% for category in category_list %}
+            <option value="{{ category['id'] }}">{{ category["name"] }}</option>
+          {% endfor %}
         </select>
       </div>
       <div class="mb-3">

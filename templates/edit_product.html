@@ -6,7 +6,7 @@ admin
 
 {% block main %}
 <div class="container d-flex justify-content-center">
-    <form class="addproduct_form" action="/edit_product" method="POST" enctype="multipart/form-data">
+    <form class="addproduct_form" action="{{ url_for('edit_product', id=old_data['id']) }}" method="POST" enctype="multipart/form-data">
       <div class="mb-3">
         <label for="" class="form-label">Product Name</label>
         <input type="text" name="productname" value="{{ old_data['name'] }}" class="form-control" id="" aria-describedby="">
@@ -19,23 +19,21 @@ admin
         <label for="" class="form-label">Category</label>
         <select class="form-select" name="category" aria-label=".form-select-sm example">
           <option selected>Select</option>
-          <option value="">Crossbody bags</option>
-          <option value="">PJ sets</option>
-          <option value="">Shoulder bags</option>
-          <option value="">Clutches</option>
-          <option value="">Tate bags</option>
+            {% for category in category_list %}
+              <option value="{{ category.id }}" {% if old_data.categoryid == category.id %} selected {% endif %}>{{ category.name }}</option>
+            {% endfor %}
         </select>
       </div>
       <div class="mb-3">
         <label for="" class="form-label">Price</label>
-        <input type="number" name="price" inputmode="numeric" class="form-control" id="">
+        <input type="number" name="price" inputmode="numeric" value="{{ old_data['price'] }}" class="form-control" id="">
       </div>  
       <div class="mb-3">
         <input type="file" name="imageurl" class="form-control" id="" aria-describedby="inputGroupFileAddon04"
           aria-label="Upload">
       </div>
       <div>
-        <button class="btn btn-primary" type="submit" id="">Add Product</button>
+        <button class="btn btn-primary" type="submit" id="">Update</button>
       </div>
     </form>
 </div>

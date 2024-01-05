@@ -147,18 +147,23 @@ def edit_product(id):
     db = get_db()
     if request.method == "POST":
         new_data = request.form
+
         db.execute("UPDATE product SET name = ?, description = ?, price = ?, categoryid = ?, imageurl = ? WHERE id = ?",
         (new_data['productname'], new_data['description'], new_data['price'], new_data['category'], new_data['imageurl'], id))
-        db.commit()    
-        return redirect(url_for("products"))
-    old_data = db.execute("SELECT * FROM product WHERE id = ?", id).fetchone()
-    return render_template("edit_product.html", old_data=old_data)
+
+        db.commit()   
+
+        return redirect(url_for("admin/products"))
+    
+    old_data = db.execute("SELECT * FROM product WHERE id = ?", (id,)).fetchone()
+    category_list = db.execute("SELECT * FROM category")
+    return render_template("edit_product.html", old_data=old_data, category_list=category_list)
 
 @app.route("/add_products", methods = ["GET", "POST"])
 @login_required
 def add_products():
+    db = get_db()
     if request.method == "POST":
-        db = get_db()
         productname = request.form['productname']
         description = request.form['description']
         category = request.form['category']
@@ -168,18 +173,15 @@ def add_products():
             image_file = request.files['imageurl']
             image_url = f'{image_file.filename}'
 
-            db.execute("INSERT INTO product (name, description, price, imageurl) VALUES (?, ?, ?, ?)",
-                        (productname, description, price, image_url)
-            )
-
-            db.execute("INSERT INTO product (categoryid) SELECT id FROM category WHERE name = ?",
-                    (category)
+            db.execute("INSERT INTO product (name, description, price, imageurl, categoryid) VALUES (?, ?, ?, ?, (SELECT id FROM category WHERE id = ?))",
+                        (productname, description, price, image_url, category)
             )
             db.commit()
 
         return redirect(url_for('products'))
     else:
-        return render_template("add_products.html")
+        category_list = db.execute("SELECT * FROM category")
+        return render_template("add_products.html", category_list=category_list)
         
 if __name__ == '__main__':
     app.run(debug=True)
