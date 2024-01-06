@@ -14,6 +14,8 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 init_app(app)
 
+app.jinja_env.filters["rupee"] = rupee
+
 @app.after_request
 def after_request(response):
     """Ensure responses aren't cached"""
@@ -134,7 +136,7 @@ def products():
                 'category': product_category,
                 'image': product_image
             })
-        return render_template("products.html", product_list=product_list)
+        return render_template("products.html", product_list=product_list, rupee=rupee)
 
 @app.route("/delete_product", methods = ["POST"])
 @login_required
@@ -146,18 +148,25 @@ def delete_product():
 def edit_product(id):
     db = get_db()
     if request.method == "POST":
-        new_data = request.form
+        productname = request.form['productname']
+        description = request.form['description']
+        category = request.form['category']
+        price = request.form['price']
 
-        db.execute("UPDATE product SET name = ?, description = ?, price = ?, categoryid = ?, imageurl = ? WHERE id = ?",
-        (new_data['productname'], new_data['description'], new_data['price'], new_data['category'], new_data['imageurl'], id))
+        if 'imageurl' in request.files:
+            image_file = request.files['imageurl']
+            image_url = f'{image_file.filename}'
 
-        db.commit()   
+            db.execute("UPDATE product SET name = ?, description = ?, price = ?, categoryid = ?, imageurl = ? WHERE id = ?",
+            (productname, description, price, category, image_url, id))
 
-        return redirect(url_for("admin/products"))
-    
-    old_data = db.execute("SELECT * FROM product WHERE id = ?", (id,)).fetchone()
-    category_list = db.execute("SELECT * FROM category")
-    return render_template("edit_product.html", old_data=old_data, category_list=category_list)
+            db.commit()   
+
+            return redirect(url_for("products"))
+    else:
+        old_data = db.execute("SELECT * FROM product WHERE id = ?", (id,)).fetchone()
+        category_list = db.execute("SELECT * FROM category")
+        return render_template("edit_product.html", old_data=old_data, category_list=category_list)
 
 @app.route("/add_products", methods = ["GET", "POST"])
 @login_required

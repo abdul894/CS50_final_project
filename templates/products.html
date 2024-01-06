@@ -6,16 +6,15 @@ admin
 
 {% block main %}
 
-<div class="row row-cols-1 row-cols-md-4 g-4">
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
   {% for product in product_list %}
-  <div class="col-lg-3">
-    <div class="card addproduct_form" style="width: 18rem;">
-      <img src="{{ url_for('static', filename=product.image) }}"
-        style="max-height: 350px; max-width: 100%; object-fit: contain;" class="card-img-top" alt="incorrect url">
+  <div class="col mb-4">
+    <div class="card h-100 addproduct_form">
+      <img src="{{ url_for('static', filename=product.image) }}" style="max-height: 350px; max-width: 100%; object-fit: contain;" class="card-img-top img-fluid" alt="incorrect url">
       <div class="card-body">
         <h5 class="card-title">{{ product.name }}</h5>
         <p class="card-text">{{ product.description }}</p>
-        <p class="card-text">Rs.{{ product.price }}.00</p>
+        <p class="card-text">{{ product.price | rupee }}</p>
         <div class="row">
           <div class="col d-flex flex-row">
             <a href="{{ url_for('edit_product', id=product.id)}}" class="btn btn-outline-secondary btn-sm me-2">
@@ -33,5 +32,6 @@ admin
     </div>
   </div>
   {% endfor %}
+</div>
 
-  {% endblock %}
+{% endblock %}

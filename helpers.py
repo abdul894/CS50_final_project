@@ -43,4 +43,5 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
-    
+def rupee(value):
+    return f"Rs.{value:,.2f}"
