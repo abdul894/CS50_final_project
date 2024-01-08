@@ -106,7 +106,7 @@ footer {
 }
 
 .addproduct_form {
-  text-align: left;
+  height: 500px;
 }
 
 input[type="number"]::-webkit-inner-spin-button {

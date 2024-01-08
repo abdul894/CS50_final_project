@@ -26,7 +26,9 @@ def after_request(response):
 
 @app.route("/")
 def index():
-    return render_template('index.html')
+    db = get_db()
+    product_list = db.execute("SELECT * FROM product")
+    return render_template('index.html', product_list=product_list)
 
 
 @app.route("/login", methods = ['GET','POST'])
@@ -118,30 +120,18 @@ def delete_user():
 @login_required
 def products():
         db = get_db()
-        products_data = db.execute("SELECT * FROM product").fetchall()
-        product_list = []
-        for data in products_data:
-            product_id = data['id']
-            product_name = data['name']
-            product_description = data['description']
-            product_price = data['price']
-            product_category = data['categoryid']
-            product_image = data['imageurl']
-
-            product_list.append({
-                'id': product_id,
-                'name': product_name,
-                'description': product_description,
-                'price': product_price,
-                'category': product_category,
-                'image': product_image
-            })
+        product_list = db.execute("SELECT * FROM product")
         return render_template("products.html", product_list=product_list, rupee=rupee)
 
 @app.route("/delete_product", methods = ["POST"])
 @login_required
 def delete_product():
-    return redirect(url_for("admin/products"))
+    db = get_db()
+    product_id = request.form.get("product_id")
+    if product_id:
+        db.execute("DELETE FROM product WHERE id = ?", product_id)
+        db.commit()
+    return redirect(url_for("products"))
 
 @app.route("/edit_product/<int:id>", methods = ["GET", "POST"])
 @login_required
