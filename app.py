@@ -25,10 +25,11 @@ def after_request(response):
     return response
 
 @app.route("/")
-def index():
+def home():
     db = get_db()
     product_list = db.execute("SELECT * FROM product")
-    return render_template('index.html', product_list=product_list)
+    category_list = db.execute("SELECT * FROM category")
+    return render_template('index.html', product_list=product_list, category_list=category_list)
 
 
 @app.route("/login", methods = ['GET','POST'])
@@ -99,6 +100,7 @@ def register():
 #     return render_template('products.html')
 
 @app.route("/users", methods = ["GET", "POST"])
+@admin_restricted
 @login_required
 def users():
     if request.method == 'GET':
@@ -107,6 +109,7 @@ def users():
         return render_template("users.html", users_data=users_data)
 
 @app.route("/delete_user", methods = ["POST"])
+@admin_restricted
 @login_required
 def delete_user():
     db = get_db()
@@ -117,6 +120,7 @@ def delete_user():
     return redirect(url_for("users"))
 
 @app.route("/admin/products", methods = ["GET", "POST"])
+@admin_restricted
 @login_required
 def products():
         db = get_db()
@@ -124,6 +128,7 @@ def products():
         return render_template("products.html", product_list=product_list, rupee=rupee)
 
 @app.route("/delete_product", methods = ["POST"])
+@admin_restricted
 @login_required
 def delete_product():
     db = get_db()
@@ -134,6 +139,7 @@ def delete_product():
     return redirect(url_for("products"))
 
 @app.route("/edit_product/<int:id>", methods = ["GET", "POST"])
+@admin_restricted
 @login_required
 def edit_product(id):
     db = get_db()
@@ -159,6 +165,7 @@ def edit_product(id):
         return render_template("edit_product.html", old_data=old_data, category_list=category_list)
 
 @app.route("/add_products", methods = ["GET", "POST"])
+@admin_restricted
 @login_required
 def add_products():
     db = get_db()

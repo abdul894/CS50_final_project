@@ -43,5 +43,13 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+def admin_restricted(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if session.get("user_type") is not "admin":
+            return redirect(url_for("home"))
+        return f(*args, **kwargs)
+    return decorated_function
+
 def rupee(value):
     return f"Rs.{value:,.2f}"
