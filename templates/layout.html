@@ -24,7 +24,7 @@
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             {% if session['user_type'] == 'admin' %}
               <li class="nav-item">
-                <a class="nav-link" href="/products">Products</a>
+                <a class="nav-link" href="/admin/products">Products</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="/add_products">List products</a>
@@ -47,6 +47,11 @@
               <li><a class="dropdown-item" href="/">Tate bags</a></li>
             </ul>
           </div>
+          {% if session["user_id"] %}
+            <a class="nav-icon" href="/logout">
+              <i class="bi bi-box-arrow-right"></i>
+            </a>
+          {% endif %}
           <a class="nav-icon" href="/login">
             <i class="bi bi-person"></i>
           </a>

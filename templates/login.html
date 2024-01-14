@@ -1,21 +1,37 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Login
+Login
 {% endblock %}
 
 {% block main %}
-    <form action="/login" method="post">
-        <div class="mb-3">
-            <input autofocus autocomplete="off" class="form-control mx-auto w-auto" id="email" name="email" placeholder="email" type="text">
-        </div>
-        <div class="mb-3">
-            <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password">
-        </div>
-        <button type="submit" class="btn btn-primary">login</button>
-    </form>
 
-    <div>
-        <a href="/register"><span>Create an account</span></a>
-    </div>
+{% for message in get_flashed_messages() %}
+<div class="alert alert-warning alert-dismissible fade show mb-4" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+
+
+<div class="container justify-content-center">
+        <form action="/login" method="post">
+            <div class="mb-3">
+                <input autofocus autocomplete="off" class="form-control form-control mx-auto w-25" id="email" name="email"
+                    placeholder="email" type="text">
+            </div>
+            <div class="mb-3">
+                <input class="form-control form-control mx-auto w-25" id="password" name="password" placeholder="Password"
+                    type="password">
+            </div>
+            <div class="mb-3 d-grid gap-2 col-1 mx-auto">
+                <button type="submit" class="btn btn-dark">login</button>
+            </div>  
+        </form>   
+        <div>
+            <button class="btn btn-dark">
+                <a href="/register" style="text-decoration: none; color: inherit;">Create an Account</a>
+            </button>
+        </div> 
+</div>
 {% endblock %}

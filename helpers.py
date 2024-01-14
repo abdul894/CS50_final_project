@@ -1,6 +1,6 @@
 import sqlite3
 import click
-from flask import g, current_app, url_for, redirect, session
+from flask import g, current_app, url_for, redirect, session, flash
 from functools import wraps
 
 def get_db():
@@ -46,7 +46,8 @@ def login_required(f):
 def admin_restricted(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if session.get("user_type") is not "admin":
+        if session.get("user_type") != "admin":
+            flash("Admin restricted!")
             return redirect(url_for("home"))
         return f(*args, **kwargs)
     return decorated_function

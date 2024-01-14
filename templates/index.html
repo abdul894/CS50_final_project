@@ -1,35 +1,38 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Home
+Home
 {% endblock %}
 
 {% block main %}
-    
-    {% for category in category_list %}
-        {% for products in product_list %}
-            {% if category.id == Products.categoryid %}        
-            <h3>{ category.name }</h3>
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
-                {% for product in products %}
-                <div class="col mb-4">
-                <div class="card shadow p-3 mb-5 bg-body rounded" style="text-align: center; height: 500px;">
-                    <img src="{{ url_for('static', filename=product.imageurl) }}" style="max-height: 350px; max-width: 100%; object-fit: contain;" class="card-img-top img-fluid" alt="incorrect url">
-                    <div class="card-body">
-                    <h5 class="card-title">{{ product.name }}</h5>
-                    <p class="card-text">{{ product.price | rupee }}</p>
-                    <form action="/add_to_cart" method="POST">
-                        <input type="hidden" name="product_id" value="{{product.id}}">
-                        <button class="btn btn-outline-dark btn-sm" type="submit" id="product_id">
+
+{% for message in get_flashed_messages() %}
+<div class="alert alert-warning alert-dismissible fade show mb-4" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+    {% for product in product_list %}
+    <div class="col mb-4">
+        <div class="card shadow p-3 mb-5 bg-body rounded" style="text-align: center; height: 500px;">
+            <img src="{{ url_for('static', filename=product.imageurl) }}"
+                style="max-height: 350px; max-width: 100%; object-fit: cover;" class="card-img-top img-fluid"
+                alt="incorrect url">
+            <div class="card-body">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text">{{ product.price | rupee }}</p>
+                <form action="/add_to_cart" method="POST">
+                    <input type="hidden" name="product_id" value="{{product.id}}">
+                    <button class="btn btn-outline-dark btn-sm" type="submit" id="product_id">
                         Add to Cart
-                        </button>
-                    </form>
-                    </div>
-                </div>
-                </div>
-            {% endfor %}
+                    </button>
+                </form>
             </div>
-            {% endif %}
-        {% endfor %}
+        </div>
+    </div>
     {% endfor %}
+</div>
 {% endblock %}

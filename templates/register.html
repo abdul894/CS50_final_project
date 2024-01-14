@@ -5,19 +5,29 @@
 {% endblock %}
 
 {% block main %}
+
+{% for message in get_flashed_messages() %}
+<div class="alert alert-warning alert-dismissible fade show mb-4" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+
     <form action="/register" method="post">
         <div class="mb-3">
-            <input autofocus autocomplete="off" class="form-control mx-auto w-auto" id="username" name="username" placeholder="Username" type="text">
+            <input autofocus autocomplete="off" class="form-control mx-auto w-25" id="username" name="username" placeholder="Username" type="text">
         </div>
         <div class="mb-3">
-            <input autofocus autocomplete="off" class="form-control mx-auto w-auto" id="email" name="email" placeholder="email" type="text">
+            <input autofocus autocomplete="off" class="form-control mx-auto w-25" id="email" name="email" placeholder="email" type="text">
         </div>
         <div class="mb-3">
-            <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password">
+            <input class="form-control mx-auto w-25" id="password" name="password" placeholder="Password" type="password">
         </div>
         <div class="mb-3">
-            <input class="form-control mx-auto w-auto" id="cpassword" name="con_password" placeholder="Confirm Password" type="password">
+            <input class="form-control mx-auto w-25" id="cpassword" name="con_password" placeholder="Confirm Password" type="password">
         </div>
-        <button type="submit" class="btn btn-primary">Register</button>
+        <div class="mb-3 d-grid gap-2 col-1 mx-auto">
+            <button type="submit" class="btn btn-dark">Register</button>
+        </div>
     </form>
 {% endblock %}

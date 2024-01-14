@@ -27,9 +27,8 @@ def after_request(response):
 @app.route("/")
 def home():
     db = get_db()
-    product_list = db.execute("SELECT * FROM product")
-    category_list = db.execute("SELECT * FROM category")
-    return render_template('index.html', product_list=product_list, category_list=category_list)
+    product_list = db.execute("SELECT * FROM product").fetchall()
+    return render_template('index.html', product_list=product_list, rupee=rupee)
 
 
 @app.route("/login", methods = ['GET','POST'])
@@ -40,25 +39,30 @@ def login():
     if request.method == 'POST':
         form_data = request.form
         if not form_data['email'] or not form_data['password']:
-            return make_response('Field is empty!', 403)
+            flash('Field is empty!')
+            return render_template("login.html")
         db = get_db()
         user_info = db.execute(
             "SELECT * FROM users WHERE email = ?", (form_data['email'],)
         ).fetchone()
 
         if user_info is None:
-            return make_response("User not registered!",  403)
+            flash("User not registered!")
+            return render_template("login.html")
         elif not check_password_hash(
             user_info['password'], form_data['password']
         ):
-            return make_response('password mismatched', 403)
+            flash("password mismatched")
+            return render_template("login.html")
        
         session['user_id'] = user_info['id']
         session['user_type'] = user_info['type'] 
         
         if user_info['type'] == 'admin':
+            flash("Welcome to admin dashboard! ")
             return redirect('/admin/products')
         else:
+            flash("Welcome on board!")
             return redirect('/')
     else:
         return render_template('login.html')
@@ -71,9 +75,11 @@ def register():
         db = get_db()    
         form_data = request.form
         if not form_data['username'] or not form_data['email'] or not form_data['password']:
-            return make_response('Field is empty!', 403)
+            flash("Empty feild!")
+            return render_template("register.html")
         elif not form_data['con_password'] == form_data['password']:
-            return make_response('Confirmed password should be same as password!')
+            flash('Confirmed password should be same as password!')
+            return render_template("register.html")
         try:
             db.execute(
                 "INSERT INTO users (username, email, password) VALUES (?, ?, ?)", 
@@ -81,7 +87,8 @@ def register():
             )
             db.commit()
         except db.IntegrityError:
-            return flash('User name already registered!', 'error')
+            flash('User name already registered!')
+            return render_template("register.html")
         
         userdata = db.execute(
             "SELECT id FROM users WHERE email = ?", (form_data['email'],)
@@ -94,10 +101,14 @@ def register():
     else:
         return render_template('register.html')
     
-# @app.route("/admin", methods = ['GET', 'POST'])
-# @login_required
-# def admin():
-#     return render_template('products.html')
+@app.route("/logout")
+def logout():
+    """Log user out"""
+
+    session.clear()
+
+    flash("Logout successfully!")
+    return redirect("/")
 
 @app.route("/users", methods = ["GET", "POST"])
 @admin_restricted
@@ -183,7 +194,7 @@ def add_products():
                         (productname, description, price, image_url, category)
             )
             db.commit()
-
+        flash("Product added successfully!")
         return redirect(url_for('products'))
     else:
         category_list = db.execute("SELECT * FROM category")
