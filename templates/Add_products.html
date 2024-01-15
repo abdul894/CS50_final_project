@@ -6,7 +6,7 @@ admin
 
 {% block main %}
 <div class="container d-flex justify-content-center">
-    <form class="addproduct_form" action="/add_products" method="POST" enctype="multipart/form-data">
+    <form class="addproduct_form" action="/add_products" method="POST" enctype="multipart/form-data" autocomplete="off">
       <div class="mb-3">
         <label for="" class="form-label">Product Name</label>
         <input type="text" name="productname" class="form-control" id="" aria-describedby="">
@@ -33,7 +33,7 @@ admin
           aria-label="Upload">
       </div>
       <div>
-        <button class="btn btn-primary" type="submit" id="">Add Product</button>
+        <button class="btn btn-dark" type="submit" id="">Add Product</button>
       </div>
     </form>
 </div>
