@@ -145,7 +145,7 @@ def delete_product():
     db = get_db()
     product_id = request.form.get("product_id")
     if product_id:
-        db.execute("DELETE FROM product WHERE id = ?", product_id)
+        db.execute("DELETE FROM product WHERE id = ?", (product_id,))
         db.commit()
     return redirect(url_for("products"))
 
