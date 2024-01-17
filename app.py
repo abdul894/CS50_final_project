@@ -43,7 +43,11 @@ def add_to_cart():
         flash("login required!")
         return redirect("/")
     
-
+@app.route("/cart", methods = ['GET', 'POST'])
+@login_required
+def cart():
+    db = get_db()
+    productid = db.execute("SELECT productid FROM cart WHERE userid = ?", (session["user_id"],))
 
 
 @app.route("/login", methods = ['GET','POST'])
