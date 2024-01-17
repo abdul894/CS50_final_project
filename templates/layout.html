@@ -34,19 +34,6 @@
               </li>
             {% endif %}
           </ul>
-          <div class="dropdown">
-            <a class="nav-link nav-icon" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-              aria-expanded="false">
-              <i class="bi bi-bag-plus"></i>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="/">Crossbody bags</a></li>
-              <li><a class="dropdown-item" href="/">PJ set</a></li>
-              <li><a class="dropdown-item" href="/">Shoulder bags</a></li>
-              <li><a class="dropdown-item" href="/">Clutches</a></li>
-              <li><a class="dropdown-item" href="/">Tate bags</a></li>
-            </ul>
-          </div>
           {% if session["user_id"] %}
             <a class="nav-icon" href="/logout">
               <i class="bi bi-box-arrow-right"></i>
@@ -63,7 +50,7 @@
     </nav>
   </header>
 
-  <main class="container py-5 text-center">
+  <main class="container py-3 text-center">
     <div class="container">
       {% block main %}{% endblock %}
     </div>

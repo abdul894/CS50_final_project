@@ -16,8 +16,8 @@ Home
 
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
     {% for product in product_list %}
-    <div class="col mb-4">
-        <div class="card h-100 shadow p-1 mb-2 bg-body rounded" style="text-align: center; height: auto;">
+    <div class="col mb-5">
+        <div class="card h-100 shadow py-2 bg-body rounded" style="text-align: contain; height: auto;">
             <img src="{{ url_for('static', filename=product.imageurl) }}"
                 style="max-height: 300px; max-width: 100%; object-fit: contain;" class="card-img-top img-fluid"
                 alt="incorrect url">

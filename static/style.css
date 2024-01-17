@@ -113,3 +113,11 @@ footer {
 input[type="number"]::-webkit-inner-spin-button {
   display: none;
 }
+
+.card-img-top {
+  transition: all 0.3s;
+}
+
+.card-img-top:hover {
+  transform: scale(1.10);
+}

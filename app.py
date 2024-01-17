@@ -31,6 +31,21 @@ def home():
     return render_template('index.html', product_list=product_list, rupee=rupee)
 
 
+@app.route("/add_to_cart", methods = ['GET', 'POST'])
+@login_required
+def add_to_cart():
+    db = get_db()
+    if request.method == "POST":
+        productid = request.form.get("product_id")
+        db.execute("INSERT INTO cart (userid, productid) VALUES (?, ?)", (session["user_id"], productid))
+        return render_template("cart.html")
+    else:
+        flash("login required!")
+        return redirect("/")
+    
+
+
+
 @app.route("/login", methods = ['GET','POST'])
 def login():
     
