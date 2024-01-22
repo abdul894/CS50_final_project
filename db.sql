@@ -21,6 +21,8 @@ CREATE TABLE category (
 );
 
 CREATE TABLE cart (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    qty INTEGER NOT NULL,
     userid INTEGER,
     productid INTEGER,
     FOREIGN KEY(userid) REFERENCES users(id),

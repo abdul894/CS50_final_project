@@ -37,17 +37,16 @@ def add_to_cart():
     db = get_db()
     if request.method == "POST":
         productid = request.form.get("product_id")
-        db.execute("INSERT INTO cart (userid, productid) VALUES (?, ?)", (session["user_id"], productid))
-        return render_template("cart.html")
-    else:
-        flash("login required!")
-        return redirect("/")
+        db.execute("INSERT INTO cart (userid, productid, qty) VALUES (?, ?, ?)", (session["user_id"], productid, "1"))
+        db.commit()
+        return redirect("/cart")
     
 @app.route("/cart", methods = ['GET', 'POST'])
 @login_required
 def cart():
     db = get_db()
-    productid = db.execute("SELECT productid FROM cart WHERE userid = ?", (session["user_id"],))
+    product_data = db.execute("SELECT product.id, product.name, product.description, product.imageurl, product.price, SUM(cart.qty) AS total_quantity FROM cart JOIN product ON cart.productid = product.id JOIN users ON cart.userid = users.id WHERE users.id = ? GROUP BY product.id", (session["user_id"],))
+    return render_template("cart.html", product_data=product_data, rupee=rupee)
 
 
 @app.route("/login", methods = ['GET','POST'])
