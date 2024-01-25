@@ -48,6 +48,15 @@ def cart():
     product_data = db.execute("SELECT product.id, product.name, product.description, product.imageurl, product.price, SUM(cart.qty) AS total_quantity FROM cart JOIN product ON cart.productid = product.id JOIN users ON cart.userid = users.id WHERE users.id = ? GROUP BY product.id", (session["user_id"],))
     return render_template("cart.html", product_data=product_data, rupee=rupee)
 
+@app.route("/remove_from_cart", methods = ['GET', 'POST'])
+@login_required
+def remove_from_cart():
+    db = get_db()
+    product_id = request.form.get("product_id")
+    db.execute("DELETE FROM cart WHERE productid = ? AND userid = ?", (product_id, session["user_id"]))
+    db.commit()
+    return redirect(url_for("home"))
+
 
 @app.route("/login", methods = ['GET','POST'])
 def login():
@@ -70,7 +79,7 @@ def login():
         elif not check_password_hash(
             user_info['password'], form_data['password']
         ):
-            flash("password mismatched")
+            flash("password missmatched")
             return render_template("login.html")
        
         session['user_id'] = user_info['id']
