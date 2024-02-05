@@ -62,7 +62,7 @@ Click on the login icon.
 
  ![registerpage](/assets/Register%20page.jpg)
 
- Once you've registered to need to change the **type** to **admin** to access the admin dashboard. In order to do that you need to run this sqlite command.
+ Once you've registered you need to change the **type** to **admin** to access the admin dashboard. In order to do that you need to run this sqlite command.
 
 ```bash
 UPDATE users SET type = 'admin' WHERE email = '**your_registered_email**';
