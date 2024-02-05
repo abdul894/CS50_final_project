@@ -17,11 +17,11 @@ python -m venv venv
 ```
 this command will create a virtual enviroment in your project directory. Now you need to activate the virtual enviroment
  
-windows:
+### windows:
 ```bash
 venv\Scripts\Activate.ps1
 ```
-MacOS:
+### MacOS:
 ```bash
 source venv/bin/activate
 ```
@@ -30,7 +30,7 @@ Now you need to install the project's dependencies by just running this one comm
 ```bash
 pip install -r requirements.txt
 ```
-The project has it own database, but if you want to create your own you can simply run `rm fumo.db` to remove the old one. Now you need to run this command:
+The project has it own database, but if you want to create your own you can simply run `rm fumo.db` to remove the old one (with caution). Now you need to run this command:
 ```bash
 flask --app app.py init-db
 ```
@@ -45,3 +45,55 @@ flask --app app.py run
 
 first register your self!
 
+Click on the login icon.
+ 
+ ![homepage](/assets/Homepage.png)
+
+
+ Now go to **Create an Account**.
+
+
+ ![loginpage](/assets/loginpage.png)
+
+
+
+ Fill up the form!
+
+
+ ![registerpage](/assets/Register%20page.jpg)
+
+ Once you've registered to need to change the **type** to **admin** to access the admin dashboard. In order to do that you need to run this sqlite command.
+
+```bash
+UPDATE users SET type = 'admin' WHERE email = '**your_registered_email**';
+``` 
+
+Now you can access admin dashboard and do the generic admin stuff.
+
+To list new porducts go the product listing tab.
+
+![admin dashboard](/assets/admin%20dashboard.png)
+
+fill up the necessary information and click on **Add product**. your product is now visible to users.
+
+If you need to change some information later on in your product click on edit icon you're good to go.
+
+![editprodut](/assets/edit%20product.png)
+
+you can also delete listed products by just clicking on delete icon.
+
+If you want to see how many users are currently registered to your site visit **Users** tab in the Nav bar.
+
+Finally register some your user's and try adding some prducts to your cart.
+
+![addtocart](/assets/addtocart.png)
+
+Cart!
+
+![cart](/assets/cart.jpg)
+
+user's can empty their cart by clicking on **delete** icon.
+
+that's it for this one.
+
+## This was CS50!
